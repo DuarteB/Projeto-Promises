@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const basePath = 'assets/';
-//const res = document.getElementById('content');
+// const fs = require('fs');
+// const path = require('path');
+// const basePath = 'assets/';
+// //const res = document.getElementById('content');
 
-function cb (err, data, index, max) {
-    if(err) throw err
-    console.log(data)
-    return start(index + 1, max)
-}
-console.log('Begin')
+// function cb (err, data, index, max) {
+//     if(err) throw err
+//     console.log(data)
+//     return start(index + 1, max)
+// }
+// console.log('Begin')
 
 // const files = fs.readdirSync(path.resolve(basePath))
 
@@ -29,17 +29,57 @@ console.log('Begin')
 //         })
 // })
 
-start(1, 4)
+// start(1, 4)
 
+// console.log('End')
+
+// function start(index, max) {
+
+//     if(index > max) return
+//     fs.readFile(
+//         path.resolve(basePath, `s${index}.txt`),
+//         { encoding: 'utf-8' },
+//         (err, data) => cb(err, data, index, max)
+//     )
+
+// }
+
+//////////////////////////-Promises-////////////////////////////////
+
+// const promise = new Promise((resolve, reject) => {
+//     setTimeout(() => resolve('End'), 2000)
+// })
+
+// console.log('Begin')
+
+// promise.then((data) => {
+//     console.log(data)
+// })
+
+// promise.then(console.log)
+
+//promise.then(() => {}, (rej) => {})
+
+const fs = require('fs');
+const path = require('path');
+const basePath = 'assets/';
+
+function readFileAsync(path, options) {
+
+    return new Promise((resolve, reject) => {
+
+        fs.readFile(path, options, (err, data) => {
+            if(err) return reject(err)
+            return resolve(data)
+        })
+
+    })
+    
+}
+
+console.log('Begin')
+readFileAsync(path.resolve(basePath, 'invictus.txt'), { encoding: 'utf-8' })
+    .then(console.log)
+    .catch(console.error)
 console.log('End')
 
-function start(index, max) {
-
-    if(index > max) return
-    fs.readFile(
-        path.resolve(basePath, `s${index}.txt`),
-        { encoding: 'utf-8' },
-        (err, data) => cb(err, data, index, max)
-    )
-
-}
